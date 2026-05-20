@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Wallet Interop Status - 2026-05-13_12-41-12</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+:root {
+  --bg: #f4f5f7;
+  --card: #ffffff;
+  --ink: #1a1d23;
+  --muted: #6b7280;
+  --line: #e6e8eb;
+  --line-strong: #d3d6da;
+  --ok: #1aa861;
+  --fail: #d4452c;
+  --err: #d68a17;
+  --skip: #9aa0a6;
+  --row-hover: #f8f9fb;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  padding: 28px 16px;
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: "cv11", "ss01";
+}
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  background: var(--card);
+  border-radius: 14px;
+  box-shadow: 0 1px 2px rgba(20,24,32,.04), 0 8px 24px rgba(20,24,32,.06);
+  overflow: hidden;
+}
+.header {
+  padding: 22px 28px 18px;
+  background: linear-gradient(180deg, #fbfcfd 0%, #ffffff 100%);
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.header .logo { width: 34px; height: 34px; object-fit: contain; flex: none; }
+.header .titles { flex: 1; min-width: 0; }
+h1 { margin: 0; font-size: 1.15rem; font-weight: 700; letter-spacing: -.01em; }
+.run-ts {
+  display: inline-block;
+  margin-top: 4px;
+  font-size: .78rem;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: .01em;
+}
+.totals {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  flex: none;
+}
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: .78rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  background: #eef0f3;
+  color: var(--muted);
+}
+.pill.ok   { background: rgba(26,168,97,.12); color: var(--ok); }
+.pill.fail { background: rgba(212,69,44,.12); color: var(--fail); }
+.pill.err  { background: rgba(214,138,23,.14); color: var(--err); }
+.pill.skip { background: #eef0f3; color: var(--skip); }
+.pill svg { width: 12px; height: 12px; }
+
+.table-wrap { padding: 6px 0 0; overflow-x: auto; }
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: .92rem;
+  font-variant-numeric: tabular-nums;
+}
+th, td {
+  padding: 12px 14px;
+  text-align: center;
+  vertical-align: middle;
+  border-bottom: 1px solid var(--line);
+}
+th.row-head, td.row-head {
+  text-align: left;
+  font-weight: 500;
+  padding-left: 28px;
+  min-width: 160px;
+}
+th {
+  background: #fafbfc;
+  font-weight: 600;
+  color: #374151;
+  font-size: .82rem;
+  letter-spacing: .01em;
+}
+tr.section th.group {
+  text-align: left;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  font-size: .7rem;
+  color: var(--muted);
+  background: #f4f5f7;
+  border-top: 1px solid var(--line-strong);
+  border-bottom: 1px solid var(--line-strong);
+  padding: 8px 28px;
+  font-weight: 700;
+}
+tr.section:first-child th.group { border-top: none; }
+tbody tr:last-child td { border-bottom: none; }
+tbody tr:not(.section):hover td { background: var(--row-hover); }
+tbody tr td:first-child { padding-left: 28px; }
+tbody tr td:last-child  { padding-right: 28px; }
+th:last-child { padding-right: 28px; }
+
+.label { display: inline-flex; align-items: center; gap: 10px; }
+.label > span { font-weight: 500; color: var(--ink); }
+th .label > span { font-weight: 600; color: #374151; font-size: .82rem; }
+.icon {
+  display: inline-block;
+  width: 24px; height: 24px;
+  border-radius: 6px;
+  object-fit: contain;
+  background: #f0f1f4;
+  flex: none;
+}
+.icon.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: .7rem;
+  font-weight: 700;
+  line-height: 1;
+  background-clip: padding-box;
+}
+.cell { line-height: 0; }
+.g {
+  width: 22px; height: 22px;
+  display: inline-block;
+  vertical-align: middle;
+}
+.g-none { opacity: .55; }
+
+.footer {
+  padding: 14px 28px 20px;
+  font-size: .74rem;
+  color: var(--muted);
+  text-align: right;
+  border-top: 1px solid var(--line);
+}
+.empty { color: var(--muted); font-size: .9rem; padding: 28px; text-align: center; }
+
+@media (max-width: 640px) {
+  body { padding: 12px 6px; }
+  .header { flex-wrap: wrap; padding: 16px 18px; }
+  th.row-head, td.row-head { padding-left: 18px; min-width: 130px; }
+  tbody tr td:first-child { padding-left: 18px; }
+  tbody tr td:last-child  { padding-right: 18px; }
+  th:last-child { padding-right: 18px; }
+}
+</style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <img class="logo" src="icons/findynet.png" alt="" />
+      <div class="titles">
+        <h1>Wallet Interop Status</h1>
+        <div class="run-ts">Run 2026-05-13_12-41-12</div>
+      </div>
+      <div class="totals"><span class="pill ok"><svg class="g g-pass" viewBox="0 0 20 20" aria-label="Passed"><circle cx="10" cy="10" r="9" fill="#1aa861"/><path d="M5.6 10.2l2.9 2.9 6-6.3" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>9 passing</span></span><span class="pill fail"><svg class="g g-fail" viewBox="0 0 20 20" aria-label="Failed"><circle cx="10" cy="10" r="9" fill="#d4452c"/><path d="M6.5 6.5l7 7M13.5 6.5l-7 7" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></svg><span>34 failing</span></span><span class="pill err"><svg class="g g-err" viewBox="0 0 20 20" aria-label="Errored"><circle cx="10" cy="10" r="9" fill="#d68a17"/><path d="M10 5.5v5.2M10 13.6v.6" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></svg><span>2 errored</span></span></div>
+    </div>
+    <div class="table-wrap"><table><thead><tr><th class='row-head'></th><th><div class='label'><img class="icon" src="icons/wallets/heidi.png" alt="" /><span>heidi</span></div></th><th><div class='label'><img class="icon" src="icons/wallets/hovi.png" alt="" /><span>hovi</span></div></th><th><div class='label'><img class="icon" src="icons/wallets/paradym.png" alt="" /><span>paradym</span></div></th><th><div class='label'><img class="icon" src="icons/wallets/procivis.png" alt="" /><span>procivis</span></div></th><th><div class='label'><img class="icon" src="icons/wallets/toppan.png" alt="" /><span>toppan</span></div></th></tr></thead><tbody><tr class='section'><th class='group' colspan='6'>Issuance</th></tr><tr><td class='row-head'><div class='label'><img class="icon" src="icons/agents/hovi_issuer.png" alt="" /><span>hovi_issuer</span></div></td><td class="cell fail" title="Failed"><svg class="g g-fail" viewBox="0 0 20 20" aria-label="Failed"><circle cx="10" cy="10" r="9" fill="#d4452c"/><path d="M6.5 6.5l7 7M13.5 6.5l-7 7" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></svg></td><td class="cell ok" title="Passed"><svg class="g g-pass" viewBox="0 0 20 20" aria-label="Passed"><circle cx="10" cy="10" r="9" fill="#1aa861"/><path d="M5.6 10.2l2.9 2.9 6-6.3" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></td><td class="cell ok" title="Passed"><svg class="g g-pass" viewBox="0 0 20 20" aria-label="Passed"><circle cx="10" cy="10" r="9" fill="#1aa861"/><path d="M5.6 10.2l2.9 2.9 6-6.3" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></td><td class="cell fail" title="Failed"><svg class="g g-fail" viewBox="0 0 20 20" aria-label="Failed"><circle cx="10" cy="10" r="9" fill="#d4452c"/><path d="M6.5 6.5l7 7M13.5 6.5l-7 7" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></svg></td><td class="cell fail" title="Failed"><svg class="g g-fail" viewBox="0 0 20 20" aria-label="Failed"><circle cx="10" cy="10" r="9" fill="#d4452c"/><path d="M6.5 6.5l7 7M13.5 6.5l-7 7" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></svg></td></tr><tr><td class='row-head'><div class='label'><img class="icon" src="icons/agents/paradym_issuer.png" alt="" /><span>paradym_issuer</span></div></td><td class="cell fail" title="Failed"><svg class="g g-fail" viewBox="0 0 20 20" aria-label="Failed"><circle cx="10" cy="10" r="9" fill="#d4452c"/><path d="M6.5 6.5l7 7M13.5 6.5l-7 7" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></svg></td><td class="cell fail" title="Failed"><svg class="g g-fail" viewBox="0 0 20 20" aria-label="Failed"><circle cx="10" cy="10" r="9" fill="#d4452c"/><path d="M6.5 6.5l7 7M13.5 6.5l-7 7" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></svg></td><td class="cell ok" title="Passed"><svg class="g g-pass" viewBox="0 0 20 20" aria-label="Passed"><circle cx="10" cy="10" r="9" fill="#1aa861"/><path d="M5.6 10.2l2.9 2.9 6-6.3" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></td><td class="cell fail" title="Failed"><svg class="g g-fail" viewBox="0 0 20 20" aria-label="Failed"><circle cx="10" cy="10" r="9" fill="#d4452c"/><path d="M6.5 6.5l7 7M13.5 6.5l-7 7" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></svg></td><td class="cell fail" title="Failed"><svg class="g g-fail" viewBox="0 0 20 20" aria-label="Failed"><circle cx="10" cy="10" r="9" fill="#d4452c"/><path d="M6.5 6.5l7 7M13.5 6.5l-7 7" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></svg></td></tr><tr><td class='row-head'><div class='label'><img class="icon" src="icons/agents/procivis_issuer.png" alt="" /><span>procivis_issuer</span></div></td><td class="cell fail" title="Failed"><svg class="g g-fail" viewBox="0 0 20 20" aria-label="Failed"><circle cx="10" cy="10" r="9" fill="#d4452c"/><path d="M6.5 6.5l7 7M13.5 6.5l-7 7" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></svg></td><td class="cell fail" title="Failed"><svg class="g g-fail" viewBox="0 0 20 20" aria-label="Failed"><circle cx="10" cy="10" r="9" fill="#d4452c"/><path d="M6.5 6.5l7 7M13.5 6.5l-7 7" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></svg></td><td class="cell fail" title="Failed"><svg class="g g-fail" viewBox="0 0 20 20" aria-label="Failed"><circle cx="10" cy="10" r="9" fill="#d4452c"/><path d="M6.5 6.5l7 7M13.5 6.5l-7 7" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></svg></td><td class="cell ok" title="Passed"><svg class="g g-pass" viewBox="0 0 20 20" aria-label="Passed"><circle cx="10" cy="10" r="9" fill="#1aa861"/><path d="M5.6 10.2l2.9 2.9 6-6.3" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></td><td class="cell fail" title="Failed"><svg class="g g-fail" viewBox="0 0 20 20" aria-label="Failed"><circle cx="10" cy="10" r="9" fill="#d4452c"/><path d="M6.5 6.5l7 7M13.5 6.5l-7 7" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></svg></td></tr><tr><td class='row-head'><div class='label'><img class="icon" src="icons/agents/sphereon_issuer.png" alt="" /><span>sphereon_issuer</span></div></td><td class="cell fail" title="Failed"><svg class="g g-fail" viewBox="0 0 20 20" aria-label="Failed"><circle cx="10" cy="10" r="9" fill="#d4452c"/><path d="M6.5 6.5l7 7M13.5 6.5l-7 7" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></svg></td><td class="cell ok" title="Passed"><svg class="g g-pass" viewBox="0 0 20 20" aria-label="Passed"><circle cx="10" cy="10" r="9" fill="#1aa861"/><path d="M5.6 10.2l2.9 2.9 6-6.3" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></td><td class="cell fail" title="Failed"><svg class="g g-fail" viewBox="0 0 20 20" aria-label="Failed"><circle cx="10" cy="10" r="9" fill="#d4452c"/><path d="M6.5 6.5l7 7M13.5 6.5l-7 7" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></svg></td><td class="cell fail" title="Failed"><svg class="g g-fail" viewBox="0 0 20 20" aria-label="Failed"><circle cx="10" cy="10" r="9" fill="#d4452c"/><path d="M6.5 6.5l7 7M13.5 6.5l-7 7" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></svg></td><td class="cell fail" title="Failed"><svg class="g g-fail" viewBox="0 0 20 20" aria-label="Failed"><circle cx="10" cy="10" r="9" fill="#d4452c"/><path d="M6.5 6.5l7 7M13.5 6.5l-7 7" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></svg></td></tr><tr><td class='row-head'><div class='label'><img class="icon" src="icons/agents/waltid_issuer.png" alt="" /><span>waltid_issuer</span></div></td><td class="cell fail" title="Failed"><svg class="g g-fail" viewBox="0 0 20 20" aria-label="Failed"><circle cx="10" cy="10" r="9" fill="#d4452c"/><path d="M6.5 6.5l7 7M13.5 6.5l-7 7" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></svg></td><td class="cell fail" title="Failed"><svg class="g g-fail" viewBox="0 0 20 20" aria-label="Failed"><circle cx="10" cy="10" r="9" fill="#d4452c"/><path d="M6.5 6.5l7 7M13.5 6.5l-7 7" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></svg></td><td class="cell fail" title="Failed"><svg class="g g-fail" viewBox="0 0 20 20" aria-label="Failed"><circle cx="10" cy="10" r="9" fill="#d4452c"/><path d="M6.5 6.5l7 7M13.5 6.5l-7 7" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></svg></td><td class="cell fail" title="Failed"><svg class="g g-fail" viewBox="0 0 20 20" aria-label="Failed"><circle cx="10" cy="10" r="9" fill="#d4452c"/><path d="M6.5 6.5l7 7M13.5 6.5l-7 7" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></svg></td><td class="cell fail" title="Failed"><svg class="g g-fail" viewBox="0 0 20 20" aria-label="Failed"><circle cx="10" cy="10" r="9" fill="#d4452c"/><path d="M6.5 6.5l7 7M13.5 6.5l-7 7" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></svg></td></tr><tr class='section'><th class='group' colspan='6'>Verification</th></tr><tr><td class='row-head'><div class='label'><img class="icon" src="icons/agents/hovi_verifier.png" alt="" /><span>hovi_verifier</span></div></td><td class="cell fail" title="Failed"><svg class="g g-fail" viewBox="0 0 20 20" aria-label="Failed"><circle cx="10" cy="10" r="9" fill="#d4452c"/><path d="M6.5 6.5l7 7M13.5 6.5l-7 7" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></svg></td><td class="cell ok" title="Passed"><svg class="g g-pass" viewBox="0 0 20 20" aria-label="Passed"><circle cx="10" cy="10" r="9" fill="#1aa861"/><path d="M5.6 10.2l2.9 2.9 6-6.3" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></td><td class="cell ok" title="Passed"><svg class="g g-pass" viewBox="0 0 20 20" aria-label="Passed"><circle cx="10" cy="10" r="9" fill="#1aa861"/><path d="M5.6 10.2l2.9 2.9 6-6.3" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></td><td class="cell ok" title="Passed"><svg class="g g-pass" viewBox="0 0 20 20" aria-label="Passed"><circle cx="10" cy="10" r="9" fill="#1aa861"/><path d="M5.6 10.2l2.9 2.9 6-6.3" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></td><td class="cell fail" title="Failed"><svg class="g g-fail" viewBox="0 0 20 20" aria-label="Failed"><circle cx="10" cy="10" r="9" fill="#d4452c"/><path d="M6.5 6.5l7 7M13.5 6.5l-7 7" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></svg></td></tr><tr><td class='row-head'><div class='label'><img class="icon" src="icons/agents/paradym_verifier.png" alt="" /><span>paradym_verifier</span></div></td><td class="cell fail" title="Failed"><svg class="g g-fail" viewBox="0 0 20 20" aria-label="Failed"><circle cx="10" cy="10" r="9" fill="#d4452c"/><path d="M6.5 6.5l7 7M13.5 6.5l-7 7" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></svg></td><td class="cell fail" title="Failed"><svg class="g g-fail" viewBox="0 0 20 20" aria-label="Failed"><circle cx="10" cy="10" r="9" fill="#d4452c"/><path d="M6.5 6.5l7 7M13.5 6.5l-7 7" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></svg></td><td class="cell err" title="Error"><svg class="g g-err" viewBox="0 0 20 20" aria-label="Errored"><circle cx="10" cy="10" r="9" fill="#d68a17"/><path d="M10 5.5v5.2M10 13.6v.6" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></svg></td><td class="cell fail" title="Failed"><svg class="g g-fail" viewBox="0 0 20 20" aria-label="Failed"><circle cx="10" cy="10" r="9" fill="#d4452c"/><path d="M6.5 6.5l7 7M13.5 6.5l-7 7" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></svg></td><td class="cell fail" title="Failed"><svg class="g g-fail" viewBox="0 0 20 20" aria-label="Failed"><circle cx="10" cy="10" r="9" fill="#d4452c"/><path d="M6.5 6.5l7 7M13.5 6.5l-7 7" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></svg></td></tr><tr><td class='row-head'><div class='label'><img class="icon" src="icons/agents/procivis_verifier.png" alt="" /><span>procivis_verifier</span></div></td><td class="cell fail" title="Failed"><svg class="g g-fail" viewBox="0 0 20 20" aria-label="Failed"><circle cx="10" cy="10" r="9" fill="#d4452c"/><path d="M6.5 6.5l7 7M13.5 6.5l-7 7" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></svg></td><td class="cell fail" title="Failed"><svg class="g g-fail" viewBox="0 0 20 20" aria-label="Failed"><circle cx="10" cy="10" r="9" fill="#d4452c"/><path d="M6.5 6.5l7 7M13.5 6.5l-7 7" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></svg></td><td class="cell fail" title="Failed"><svg class="g g-fail" viewBox="0 0 20 20" aria-label="Failed"><circle cx="10" cy="10" r="9" fill="#d4452c"/><path d="M6.5 6.5l7 7M13.5 6.5l-7 7" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></svg></td><td class="cell ok" title="Passed"><svg class="g g-pass" viewBox="0 0 20 20" aria-label="Passed"><circle cx="10" cy="10" r="9" fill="#1aa861"/><path d="M5.6 10.2l2.9 2.9 6-6.3" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></td><td class="cell fail" title="Failed"><svg class="g g-fail" viewBox="0 0 20 20" aria-label="Failed"><circle cx="10" cy="10" r="9" fill="#d4452c"/><path d="M6.5 6.5l7 7M13.5 6.5l-7 7" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></svg></td></tr><tr><td class='row-head'><div class='label'><img class="icon" src="icons/agents/waltid_verifier.png" alt="" /><span>waltid_verifier</span></div></td><td class="cell fail" title="Failed"><svg class="g g-fail" viewBox="0 0 20 20" aria-label="Failed"><circle cx="10" cy="10" r="9" fill="#d4452c"/><path d="M6.5 6.5l7 7M13.5 6.5l-7 7" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></svg></td><td class="cell fail" title="Failed"><svg class="g g-fail" viewBox="0 0 20 20" aria-label="Failed"><circle cx="10" cy="10" r="9" fill="#d4452c"/><path d="M6.5 6.5l7 7M13.5 6.5l-7 7" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></svg></td><td class="cell err" title="Error"><svg class="g g-err" viewBox="0 0 20 20" aria-label="Errored"><circle cx="10" cy="10" r="9" fill="#d68a17"/><path d="M10 5.5v5.2M10 13.6v.6" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></svg></td><td class="cell fail" title="Failed"><svg class="g g-fail" viewBox="0 0 20 20" aria-label="Failed"><circle cx="10" cy="10" r="9" fill="#d4452c"/><path d="M6.5 6.5l7 7M13.5 6.5l-7 7" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></svg></td><td class="cell fail" title="Failed"><svg class="g g-fail" viewBox="0 0 20 20" aria-label="Failed"><circle cx="10" cy="10" r="9" fill="#d4452c"/><path d="M6.5 6.5l7 7M13.5 6.5l-7 7" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></svg></td></tr></tbody></table></div>
+    <div class="footer">Generated 2026-05-13 15:23:27</div>
+  </div>
+</body>
+</html>
