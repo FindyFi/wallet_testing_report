@@ -1,0 +1,93 @@
+{
+    "_comment": [
+        "TEMPLATE. Copy this to .report_info.json and replace the placeholder text:",
+        "",
+        "    cp report_info.example.json .report_info.json",
+        "",
+        "generate_compact_report.py reads .report_info.json from its output directory",
+        "and renders the blocks underneath the interop matrix. That file is",
+        "gitignored, so the published wording is not versioned; this template is,",
+        "so the expected shape stays documented. A missing .report_info.json is not",
+        "an error: the matrix renders on its own and the script notes it on stderr.",
+        "",
+        "Each entry in \"blocks\" becomes one card, laid out in a two-column grid in",
+        "the order given. A block has a \"title\" plus any combination of:",
+        "",
+        "  body    Paragraph text. A string, or a list of strings joined with a",
+        "          single space so long prose can be line-wrapped for editing.",
+        "          This is the ONLY field inserted as raw HTML, so inline tags",
+        "          such as <strong> and <em> work here. Keep it to inline",
+        "          formatting; anything untrusted must not go in this file.",
+        "          Note: because it is raw HTML, angle brackets are read as tags",
+        "          — placeholders below use [square brackets] for that reason.",
+        "  links   Buttons below the body. \"label\" and \"href\" are required;",
+        "          \"icon\" optionally names a built-in glyph (see LINK_ICONS in",
+        "          the script; \"github\" is the only one today). http, https and",
+        "          mailto URLs only — anything else is dropped with a warning.",
+        "  legend  Status key rows. \"outcome\" names a pytest result (Passed,",
+        "          Failed, Error, Skipped) and pulls in the exact same glyph the",
+        "          matrix cells use, so the key cannot drift from the table.",
+        "",
+        "Blocks are free-form: rename them, drop them, or add your own."
+    ],
+    "blocks": [
+        {
+            "title": "About this report",
+            "body": [
+                "[What generated these results, and what was tested against.",
+                "One or two sentences. Inline <strong>emphasis</strong> works here.]"
+            ],
+            "links": [
+                {
+                    "label": "[Link label]",
+                    "href": "https://github.com/<org>/<repo>",
+                    "icon": "github"
+                },
+                {
+                    "label": "[Link without an icon]",
+                    "href": "https://example.org/"
+                }
+            ]
+        },
+        {
+            "title": "Status key",
+            "legend": [
+                {
+                    "outcome": "Passed",
+                    "term": "Pass",
+                    "description": "[What a passing cell means.]"
+                },
+                {
+                    "outcome": "Failed",
+                    "term": "Fail",
+                    "description": "[What a failing cell means.]"
+                },
+                {
+                    "outcome": "Error",
+                    "term": "Error",
+                    "description": "[What an errored cell means.]"
+                },
+                {
+                    "outcome": "Skipped",
+                    "term": "Skipped",
+                    "description": "[Optional: drop this entry if runs never skip.]"
+                }
+            ]
+        },
+        {
+            "title": "Reading the matrix",
+            "body": [
+                "[How to interpret rows, columns and sections. Rows are agents,",
+                "columns are wallets; a wallet with an extra parametrize dimension",
+                "gets one column per value.]"
+            ]
+        },
+        {
+            "title": "[Your own block]",
+            "body": [
+                "[Caveats, contact details, how to report a wrong result —",
+                "whatever suits the audience of the published page.]"
+            ]
+        }
+    ]
+}
