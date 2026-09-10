@@ -15,6 +15,13 @@
         "          \"icon\" optionally names a built-in glyph (see LINK_ICONS in",
         "          the script; \"github\" is the only one today). http, https and",
         "          mailto URLs only.",
+        "  column  Which side of the two-column layout the card sits in:",
+        "          \"left\" or \"right\". Cards within a column keep the order",
+        "          they are listed in here. A block that omits it alternates",
+        "          left/right with the other blocks that omit it. The keys",
+        "          generated from the run itself (\"Why a cell is red\", \"What",
+        "          moved\") are always placed at the foot of the right column.",
+        "",
         "  legend  Status key rows. \"outcome\" names a pytest result (Passed,",
         "          Failed, Error, Skipped) and pulls in the exact same glyph the",
         "          matrix cells use, so the key cannot drift from the table."
@@ -38,7 +45,36 @@
                     "label": "Pensiondemo",
                     "href": "https://pensiondemo.findy.fi/"
                 }
-            ]
+            ],
+            "column": "left"
+        },
+        {
+            "title": "Questions or issues?",
+            "body": [
+                "Results reflect a single automated run and may not capture all",
+                "real-world scenarios. Passed results reflect fully working",
+                "compatibility within testing limitations but failures can stem from",
+                "configuration differences, transient network conditions, or test",
+                "environment limitations rather than fundamental incompatibility.",
+                "If a result looks incorrect or there are wallets or agents which",
+                "should be added to testing suite, please raise an issue in the",
+                "<strong>Findy Wallet Tester Github repository</strong>.",
+                "We welcome feedback and contributions to the project."
+            ],
+            "column": "left"
+        },
+        {
+            "title": "Reading the matrix",
+            "body": [
+                "Rows are <strong>agents</strong> (issuer or verifier services);",
+                "columns are <strong>wallet apps</strong>. A cell shows whether the",
+                "wallet successfully completed a testing flow with an agent.",
+                "The <em>Issuance</em> section covers credential offer and acceptance;",
+                "<em>Verification</em> covers presentation requests and responses.",
+                "A passing diagonal (same vendor on both sides) does not imply",
+                "cross-vendor compatibility, meaning each cell is independent."
+            ],
+            "column": "right"
         },
         {
             "title": "Status key",
@@ -58,33 +94,8 @@
                     "term": "Error",
                     "description": "The test runner hit an unexpected exception before the flow could be evaluated. The result is inconclusive."
                 }
-            ]
-        },
-        {
-            "title": "Reading the matrix",
-            "body": [
-                "Rows are <strong>agents</strong> (issuer or verifier services);",
-                "columns are <strong>wallet apps</strong>. A cell shows whether the",
-                "wallet successfully completed a testing flow with an agent.",
-                "The <em>Issuance</em> section covers credential offer and acceptance;",
-                "<em>Verification</em> covers presentation requests and responses.",
-                "A passing diagonal (same vendor on both sides) does not imply",
-                "cross-vendor compatibility, meaning each cell is independent."
-            ]
-        },
-        {
-            "title": "Questions or issues?",
-            "body": [
-                "Results reflect a single automated run and may not capture all",
-                "real-world scenarios. Passed results reflect fully working",
-                "compatibility within testing limitations but failures can stem from",
-                "configuration differences, transient network conditions, or test",
-                "environment limitations rather than fundamental incompatibility.",
-                "If a result looks incorrect or there are wallets or agents which",
-                "should be added to testing suite, please raise an issue in the",
-                "<strong>Findy Wallet Tester Github repository</strong>.",
-                "We welcome feedback and contributions to the project."
-            ]
+            ],
+            "column": "right"
         }
     ]
 }
